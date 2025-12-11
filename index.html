@@ -10,84 +10,62 @@
             theme: {
                 extend: {
                     colors: {
-                        // Cores de Destaque
-                        '2025-primary': '#007AFF', // Azul (Ano Atual)
-                        '2024-primary': '#5E5CE6', // Roxo (Ano Anterior)
+                        // Cores de Identidade
+                        '2025-primary': '#007AFF', // Azul (Ano Atual) - Apple Blue
+                        '2024-primary': '#5E5CE6', // Roxo (Ano Anterior) - Apple Purple
                         
                         // Cores de Score
-                        'high-score': '#34C759', 
+                        'high-score': '#34C759', // Verde para sucesso
                         'mid-high-score': '#FFCC00',
                         'mid-low-score': '#FF9500',
                         'low-score': '#FF3B30',
-                        
-                        // Cores de Fundo Escuro para legibilidade
-                        'dark-overlay': 'rgba(0, 0, 0, 0.6)', /* Aumentei a opacidade do overlay */
-                        'dark-card-bg': 'rgba(255, 255, 255, 0.1)', /* Diminui a opacidade do card */
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Fundo com a imagem do Monte Fuji e fixo */
-            /* Se a imagem não aparecer, o motivo é restrição de segurança (CORS) do ambiente */
-            background-image: url('Mt_Fuji 29-11-2013.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            
+            /* Fundo branco suave (quase branco) */
+            background-color: #F9F9F9; 
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
-            
-            /* Define a cor padrão do texto para claro para o contraste */
-            color: #E2E8F0; 
+            color: #1F2937; 
             position: relative; 
             min-height: 100vh;
         }
 
-        /* Overlay escuro para garantir a legibilidade do texto claro sobre a imagem */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--tw-colors-dark-overlay); 
-            z-index: -1;
+        /* Estilo Apple: Cards brancos flutuantes */
+        .apple-card {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04); /* Sombra suave para levantar o elemento */
+            transition: all 0.2s ease-out;
         }
 
-        .glass-card {
-            /* Cartões claros com alta transparência para visualização do fundo */
-            background: var(--tw-colors-dark-card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .apple-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--tw-colors-2025-primary);
+        }
+        
+        
+        .apple-header-text {
+            font-weight: 300; /* Light weight */
+            color: #1F2937;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 48px rgba(0, 122, 255, 0.3);
-            border-color: rgba(0, 122, 255, 0.5);
-        }
-
-        .header-gradient {
-            /* Ajustado para funcionar no modo escuro */
-            background: linear-gradient(135deg, var(--tw-colors-2024-primary) 30%, var(--tw-colors-2025-primary) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra para destacar */
-        }
-
-        /* Cores de Score - Mantidas, pois são vibrantes */
+      
         .score-10, .score-9 { color: var(--tw-colors-high-score); }
         .score-8, .score-7 { color: var(--tw-colors-mid-high-score); }
         .score-6, .score-5 { color: var(--tw-colors-mid-low-score); }
         .score-4, .score-3, .score-2, .score-1, .score-0, .score-negative { color: var(--tw-colors-low-score); }
+
+        /* Estrela Cheia e Vazia */
+        .star-filled { color: #FFC72C; }
+        .star-empty { color: #D1D5DB; }
 
         /* Animações e Placeholders */
         .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
@@ -103,8 +81,8 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--tw-colors-2025-primary) 0%, var(--tw-colors-2024-primary) 100%);
+            border-radius: 0.75rem 0.75rem 0 0;
+            background: #E5E7EB; /* Placeholder Clean Gray */
         }
 
         .item-image-placeholder {
@@ -112,40 +90,76 @@
             align-items: center;
             justify-content: center;
             font-size: 4rem;
-            color: rgba(255, 255, 255, 0.9); 
+            color: rgba(0, 0, 0, 0.3); 
             font-weight: 900;
         }
 
         .image-upload-zone {
-            border: 2px dashed #9CA3AF; /* Cor clara para a borda pontilhada */
-            border-radius: 12px;
+            border: 2px dashed #D1D5DB;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            min-height: 50px;
         }
 
         .image-upload-zone:hover {
             border-color: var(--tw-colors-2025-primary);
-            background: rgba(0, 122, 255, 0.1);
+            background: rgba(0, 122, 255, 0.03);
+            border-style: solid;
         }
 
         .card-container {
             position: relative;
             overflow: hidden;
         }
-
-        .card-image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
+        
+        /* Estilos do Perfil */
+        #profile-pic {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #FFFFFF;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-
-        .glass-card:hover .card-image-overlay {
-            opacity: 1;
+        
+        .editable-bio {
+            min-height: 6rem;
+            resize: vertical;
+            border: 1px solid transparent;
+            padding: 8px;
+            border-radius: 8px;
+            transition: border-color 0.2s;
+        }
+        
+        .editable-bio:focus {
+            outline: none;
+            border-color: var(--tw-colors-2025-primary);
+            background-color: #F8F9FA;
+        }
+        
+        /* Placeholder para contenteditable */
+        [contenteditable][data-placeholder]:empty:before {
+            content: attr(data-placeholder);
+            color: #9CA3AF;
+            pointer-events: none;
+        }
+        
+        [contenteditable]:focus {
+            outline: none;
+        }
+        
+        /* Melhor visualização para cards com imagens */
+        .card-container:hover .item-image {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .item-image {
+            transition: transform 0.3s ease-out;
         }
     </style>
 </head>
@@ -154,62 +168,584 @@
         const data = {
             '2024': {
                 music: [
-                    { title: "Diário de um Excluído - Santtos", score: 8, extra: "(melhor faixa: 'Café')", image: "" },
-                    { title: "American Dream - 21 Savage", score: 7.5, image: "" },
-                    { title: "Vultures 1 - Kanye West", score: 7, image: "" },
-                    { title: "Puterrier (Funk)", score: 8.5, image: "" },
-                    { title: "Insano - Kid Cudi", score: 10, best: true, image: "" },
-                    { title: "Royal Blu - Blu / Roy Royal", score: 8, image: "" },
-                    { title: "2093 - Yeat", score: 4, image: "" },
-                    { title: "WE DON'T TRUST YOU - Future - Metro Boomin", score: 0, extra: "Sem nota", image: "" },
-                    { title: "Kalledy - Link do zap", score: 9, image: "" },
-                    { title: "Dias antes do caos - Alee", score: 7, image: "" }
+                    {
+                        title: "Diário de um Excluído - Santtos",
+                        score: 8,
+                        extra: "(melhor faixa: 'Café')",
+                        image: ""
+                    },
+                    {
+                        title: "American Dream - 21 Savage",
+                        score: 7.5,
+                        image: ""
+                    },
+                    {
+                        title: "Vultures 1 - Kanye West",
+                        score: 7,
+                        image: ""
+                    },
+                    {
+                        title: "Puterrier (Funk)",
+                        score: 8.5,
+                        image: ""
+                    },
+                    {
+                        title: "Insano - Kid Cudi",
+                        score: 10,
+                        best: true,
+                        image: ""
+                    },
+                    {
+                        title: "Royal Blu - Blu / Roy Royal",
+                        score: 8,
+                        image: ""
+                    },
+                    {
+                        title: "2093 - Yeat",
+                        score: 4,
+                        image: ""
+                    },
+                    {
+                        title: "WE DON'T TRUST YOU - Future - Metro Boomin",
+                        score: 0,
+                        extra: "Sem nota",
+                        image: ""
+                    },
+                    {
+                        title: "Kalledy - Link do zap",
+                        score: 9,
+                        image: ""
+                    },
+                    {
+                        title: "Dias antes do caos - Alee",
+                        score: 7,
+                        image: ""
+                    }
                 ],
                 films: [
-                    { title: "The Marvels (2023)", score: 0.5, worst: true, type: "Filme", image: "" },
-                    { title: "Duna: Parte 2", score: 4, extra: "Bom", type: "Filme", image: "" },
-                    { title: "Kung Fu Panda 4", score: 3, extra: "Médio", type: "Filme", image: "" }
+                    {
+                        title: "The Marvels (2023)",
+                        score: 0.5,
+                        worst: true,
+                        type: "Filme",
+                        image: ""
+                    },
+                    {
+                        title: "Duna: Parte 2",
+                        score: 4,
+                        extra: "Bom",
+                        type: "Filme",
+                        image: ""
+                    },
+                    {
+                        title: "Kung Fu Panda 4",
+                        score: 3,
+                        extra: "Médio",
+                        type: "Filme",
+                        image: ""
+                    }
                 ],
                 games: []
             },
             '2025': {
                 music: [
-                    { title: "Timely - Anri", score: 8, image: "" },
-                    { title: "Standing Still In A Moving Scene - 百景", score: 10, image: "" },
-                    { title: "Ballonerism - Mac Miller", score: 10, image: "" },
-                    { title: "Diamantes, Lágrimas e Rostos para Esquecer - BK", score: 8, image: "" },
-                    { title: "What A Devastating Turn of Events - Rachel Chinouriri", score: 7, image: "" },
-                    { title: "Hurry Up Tomorrow - The Weeknd", score: 7, image: "" },
-                    { title: "Quanto Mais Eu Como, Mais Fome Eu Sinto - Djonga", score: 5, image: "" },
-                    { title: "MUSIC - SORRY 4 DA WAIT - Playboi Carti", score: 4, image: "" },
-                    { title: "SWAG - Justin Bieber", score: 6, image: "" },
-                    { title: "JACKBOYS 2 - travis", score: 2, image: "" },
-                    { title: "CARO Vapor II - Don L", score: 10, image: "" },
-                    { title: "Eu venci o mundo - Veigh", score: -10, worst: true, image: "" }
+                    {
+                        title: "Timely - Anri",
+                        score: 8,
+                        image: ""
+                    },
+                    {
+                        title: "Standing Still In A Moving Scene - 百景",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Ballonerism - Mac Miller",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Diamantes, Lágrimas e Rostos para Esquecer - BK",
+                        score: 8,
+                        image: ""
+                    },
+                    {
+                        title: "What A Devastating Turn of Events - Rachel Chinouriri",
+                        score: 7,
+                        image: ""
+                    },
+                    {
+                        title: "Hurry Up Tomorrow - The Weeknd",
+                        score: 7,
+                        image: ""
+                    },
+                    {
+                        title: "Quanto Mais Eu Como, Mais Fome Eu Sinto - Djonga",
+                        score: 5,
+                        image: ""
+                    },
+                    {
+                        title: "MUSIC - SORRY 4 DA WAIT - Playboi Carti",
+                        score: 4,
+                        image: ""
+                    },
+                    {
+                        title: "SWAG - Justin Bieber",
+                        score: 6,
+                        image: ""
+                    },
+                    {
+                        title: "JACKBOYS 2 - travis",
+                        score: 2,
+                        image: ""
+                    },
+                    {
+                        title: "CARO Vapor II - Don L",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Eu venci o mundo - Veigh",
+                        score: -10,
+                        worst: true,
+                        image: ""
+                    }
                 ],
                 films: [
-                    { title: "Divertidamente 2", score: 4, type: "Filme", image: "" },
-                    { title: "Captain America: Brave New World", score: 2, type: "Filme", image: "" },
-                    { title: "Sinners", score: 4, type: "Filme", image: "" },
-                    { title: "Superman (2025)", score: 4.5, type: "Filme", image: "" },
-                    { title: "The Summer I Turned Pretty", score: 5, type: "Série", image: "" },
-                    { title: "Peacemaker Season 2", score: 8, best: true, type: "Série", image: "" }
+                    {
+                        title: "Divertidamente 2",
+                        score: 4,
+                        type: "Filme",
+                        image: ""
+                    },
+                    {
+                        title: "Captain America: Brave New World",
+                        score: 2,
+                        type: "Filme",
+                        image: ""
+                    },
+                    {
+                        title: "Sinners",
+                        score: 4,
+                        type: "Filme",
+                        image: ""
+                    },
+                    {
+                        title: "Superman (2025)",
+                        score: 4.5,
+                        type: "Filme",
+                        image: ""
+                    },
+                    {
+                        title: "The Summer I Turned Pretty",
+                        score: 5,
+                        type: "Série",
+                        image: ""
+                    },
+                    {
+                        title: "Peacemaker Season 2",
+                        score: 8,
+                        best: true,
+                        type: "Série",
+                        image: ""
+                    }
                 ],
                 games: [
-                    { title: "Batman: Arkham City", score: 10, image: "" },
-                    { title: "Devil May Cry 5", score: 10, image: "" },
-                    { title: "Hogwarts Legacy", score: 5, image: "" },
-                    { title: "The Last of Us Part I", score: 10, image: "" },
-                    { title: "BioShock Infinite", score: 10, image: "" },
-                    { title: "Resident Evil 4 Remake", score: 10, image: "" },
-                    { title: "Lies Of P", score: 10, image: "" },
-                    { title: "Miles Morales", score: 10, image: "" },
-                    { title: "JEDI FALLEN ORDER", score: 10, image: "" },
-                    { title: "South Park: The Fractured But Whole", score: 10, image: "" },
-                    { title: "South Park: The Stick of Truth", score: 10, image: "" }
+                    {
+                        title: "Batman: Arkham City",
+                        score: 10,
+                        image: "https://pin.it/3DGVruZJ4"
+                    },
+                    {
+                        title: "Devil May Cry 5",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Hogwarts Legacy",
+                        score: 5,
+                        image: ""
+                    },
+                    {
+                        title: "The Last of Us Part I",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "BioShock Infinite",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Resident Evil 4 Remake",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Lies Of P",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "Miles Morales",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "JEDI FALLEN ORDER",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "South Park: The Fractured But Whole",
+                        score: 10,
+                        image: ""
+                    },
+                    {
+                        title: "South Park: The Stick of Truth",
+                        score: 10,
+                        image: ""
+                    }
                 ]
             }
         };
+        
+        // Funções de Persistência LocalStorage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('acervoData', JSON.stringify(data));
+                localStorage.setItem('acervoProfile', JSON.stringify(profile));
+            } catch (e) {
+                console.warn('Erro ao salvar no localStorage:', e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('acervoData');
+                const savedProfile = localStorage.getItem('acervoProfile');
+                
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    // Mescla dados salvos com estrutura padrão
+                    Object.keys(parsed).forEach(year => {
+                        if (data[year]) {
+                            ['games', 'music', 'films'].forEach(cat => {
+                                if (parsed[year][cat]) {
+                                    parsed[year][cat].forEach((item, idx) => {
+                                        if (data[year][cat][idx]) {
+                                            // Preserva imagem se existir
+                                            if (item.image) {
+                                                data[year][cat][idx].image = item.image;
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    // Atualiza com dados mesclados
+                    Object.assign(data, parsed);
+                }
+                
+                if (savedProfile) {
+                    profile = JSON.parse(savedProfile);
+                }
+            } catch (e) {
+                console.warn('Erro ao carregar do localStorage:', e);
+            }
+        }
+
+        let profile = {
+            name: "",
+            bio: "",
+            imageUrl: ""
+        };
+        
+        // Carrega dados salvos antes de inicializar
+        loadFromLocalStorage();
+        
+        // Se não houver perfil salvo, usa valores padrão vazios
+        if (!profile.name && !profile.bio && !profile.imageUrl) {
+            profile = {
+                name: "",
+                bio: "",
+                imageUrl: ""
+            };
+        }
+        
+        // --- Funções de Perfil ---
+        function loadProfile() {
+            const nameEl = document.getElementById('profile-name');
+            const bioEl = document.getElementById('profile-bio');
+            const picEl = document.getElementById('profile-pic');
+            
+            if (nameEl) {
+                nameEl.textContent = profile.name || "";
+            }
+            if (bioEl) {
+                bioEl.value = profile.bio || "";
+            }
+            if (picEl) {
+                picEl.src = profile.imageUrl || "https://placehold.co/120x120/E5E7EB/4B5563?text=+";
+            }
+        }
+
+        function handleBioChange(event) {
+            profile.bio = event.target.value;
+            saveToLocalStorage();
+        }
+
+        function handleProfilePicUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profile.imageUrl = e.target.result;
+                    const picEl = document.getElementById('profile-pic');
+                    if (picEl) {
+                        picEl.src = profile.imageUrl;
+                    }
+                    saveToLocalStorage();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleNameChange(event) {
+            profile.name = event.target.textContent || "";
+            saveToLocalStorage();
+        }
+        // -------------------------
+
+        // Função para gerar código JavaScript formatado do objeto data
+        function generateDataCode(obj, indent = 0) {
+            const spaces = ' '.repeat(indent * 4);
+            if (Array.isArray(obj)) {
+                if (obj.length === 0) return '[]';
+                let code = '[\n';
+                obj.forEach((item, idx) => {
+                    code += spaces + '    ' + generateDataCode(item, indent + 1);
+                    if (idx < obj.length - 1) code += ',';
+                    code += '\n';
+                });
+                return code + spaces + ']';
+            } else if (typeof obj === 'object' && obj !== null) {
+                const keys = Object.keys(obj);
+                if (keys.length === 0) return '{}';
+                let code = '{\n';
+                keys.forEach((key, idx) => {
+                    const formattedKey = /^\d+$/.test(key) ? `'${key}'` : key;
+                    code += spaces + '    ' + formattedKey + ': ' + generateDataCode(obj[key], indent + 1);
+                    if (idx < keys.length - 1) code += ',';
+                    code += '\n';
+                });
+                return code + spaces + '}';
+            } else if (typeof obj === 'string') {
+                // Escape aspas e quebras de linha
+                const escaped = obj.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+                return `"${escaped}"`;
+            } else {
+                return String(obj);
+            }
+        }
+
+        // Funções de Exportação/Importação de Dados
+        function exportData() {
+            // Garante que os dados estão atualizados
+            saveToLocalStorage();
+            
+            const exportObj = {
+                data: data,
+                profile: profile,
+                timestamp: new Date().toISOString()
+            };
+            
+            const jsonStr = JSON.stringify(exportObj, null, 2);
+            
+            // Gera código JavaScript formatado para substituição direta
+            const jsCode = `const data = ${generateDataCode(data)};`;
+            
+            // Cria um modal para exibir o código
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 max-w-6xl w-full max-h-[85vh] overflow-hidden flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-2xl font-bold text-gray-900">Código para Atualizar HTML</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                        📋 <strong>Opção 1:</strong> Clique em "Atualizar Automaticamente" e me envie a mensagem que aparecer<br>
+                        💾 <strong>Opção 2:</strong> Copie o código abaixo e cole aqui na conversa para eu atualizar o arquivo
+                    </p>
+                    <textarea id="export-code" class="w-full h-96 p-4 border-2 border-gray-300 rounded-lg font-mono text-xs resize-none" readonly>${jsCode}</textarea>
+                    <div class="flex gap-3 mt-4 flex-wrap">
+                        <button onclick="updateFileAutomatically()" class="flex-1 min-w-[200px] bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                            🤖 Atualizar Automaticamente
+                        </button>
+                        <button onclick="copyExportCode()" class="flex-1 min-w-[200px] bg-2025-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+                            📋 Copiar Código
+                        </button>
+                        <button onclick="downloadExportFile()" class="flex-1 min-w-[200px] bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                            💾 Baixar JSON
+                        </button>
+                        <button onclick="this.closest('.fixed').remove()" class="px-6 py-3 rounded-lg font-semibold border-2 border-gray-300 hover:bg-gray-50 transition-colors">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Salva referências para uso nas funções
+            window.currentExportData = jsonStr;
+            window.currentJSCode = jsCode;
+        }
+
+        function updateFileAutomatically() {
+            // Garante dados atualizados
+            saveToLocalStorage();
+            
+            // Pega dados do localStorage (fonte de verdade)
+            const savedData = localStorage.getItem('acervoData');
+            const savedProfile = localStorage.getItem('acervoProfile');
+            
+            if (!savedData) {
+                alert('❌ Nenhum dado encontrado no navegador. Adicione algumas imagens primeiro!');
+                return;
+            }
+            
+            try {
+                const dataObj = JSON.parse(savedData);
+                const profileObj = savedProfile ? JSON.parse(savedProfile) : profile;
+                
+                // Gera código JavaScript formatado
+                const dataCode = generateDataCode(dataObj);
+                const profileCode = generateDataCode(profileObj);
+                
+                const fullCode = `// Dados atualizados - Cole isso para o assistente atualizar o arquivo\n\nconst data = ${dataCode};\n\nlet profile = ${profileCode};`;
+                
+                // Copia para área de transferência
+                navigator.clipboard.writeText(fullCode).then(() => {
+                    // Mostra instruções
+                    const modal = document.createElement('div');
+                    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+                    modal.innerHTML = `
+                        <div class="bg-white rounded-2xl p-6 max-w-2xl w-full">
+                            <div class="text-center">
+                                <div class="text-6xl mb-4">🤖</div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-4">Código Copiado!</h3>
+                                <p class="text-gray-600 mb-6">
+                                    O código com seus dados atualizados foi copiado para a área de transferência.<br><br>
+                                    <strong>Agora é só me avisar: "atualize o arquivo com os dados copiados"</strong><br><br>
+                                    Ou cole o código aqui na conversa que eu atualizo para você!
+                                </p>
+                                <button onclick="this.closest('.fixed').remove()" 
+                                        class="bg-2025-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+                                    Entendi, fechar
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+                    
+                    // Também salva globalmente para fácil acesso
+                    window.dataForUpdate = fullCode;
+                    
+                    console.log('%c✅ CÓDIGO COPIADO!', 'color: green; font-size: 20px; font-weight: bold;');
+                    console.log('%cAgora avise: "atualize o arquivo com os dados copiados"', 'color: blue; font-size: 14px;');
+                    console.log('Ou execute: copy(window.dataForUpdate) para copiar novamente');
+                }).catch(() => {
+                    alert('Não foi possível copiar automaticamente. O código está no campo de texto acima.');
+                });
+            } catch (e) {
+                alert('Erro ao processar dados: ' + e.message);
+            }
+        }
+
+        function copyExportCode() {
+            const textarea = document.getElementById('export-code');
+            if (textarea) {
+                textarea.select();
+                document.execCommand('copy');
+                
+                // Feedback visual
+                const btn = event.target.closest('button');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copiado!';
+                btn.classList.add('bg-green-500');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('bg-green-500');
+                }, 2000);
+            }
+        }
+
+        function downloadExportFile() {
+            if (!window.currentExportData) return;
+            
+            const blob = new Blob([window.currentExportData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `acervo-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const imported = JSON.parse(e.target.result);
+                            
+                            if (imported.data) {
+                                // Mescla dados importados
+                                Object.keys(imported.data).forEach(year => {
+                                    if (data[year]) {
+                                        ['games', 'music', 'films'].forEach(cat => {
+                                            if (imported.data[year][cat]) {
+                                                imported.data[year][cat].forEach((item, idx) => {
+                                                    if (data[year][cat][idx] && item.image) {
+                                                        data[year][cat][idx].image = item.image;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                            
+                            if (imported.profile) {
+                                profile = imported.profile;
+                            }
+                            
+                            saveToLocalStorage();
+                            loadProfile();
+                            renderAllDetails();
+                            renderStats();
+                            renderGraph();
+                            initializeIntersectionObserver();
+                            
+                            alert('✅ Dados importados com sucesso!');
+                        } catch (err) {
+                            alert('❌ Erro ao importar: ' + err.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
 
         function normalizeScore(item, isFilm) {
             let score = item.score;
@@ -268,7 +804,7 @@
         function renderStats() {
             // Cálculo da diferença de média
             const diffAvg = (stats2025.totalAverage - stats2024.totalAverage).toFixed(2);
-            let avgColor = 'text-gray-400';
+            let avgColor = 'text-gray-600';
             let avgIcon = '';
             if (diffAvg > 0) {
                 avgColor = 'text-high-score'; 
@@ -279,33 +815,33 @@
             }
 
             document.getElementById('stats-container').innerHTML = `
-                <div class="glass-card p-8 rounded-3xl border-l-4 border-2025-primary animated-item">
-                    <p class="text-xl font-semibold text-gray-300 mb-4">Total de Itens</p>
+                <div class="apple-card p-8 rounded-3xl border-l-4 border-2025-primary animated-item">
+                    <p class="text-xl font-semibold text-gray-700 mb-4">Total de Itens</p>
                     <div class="flex justify-between items-end">
-                        <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black">${stats2024.totalItems}</span></div>
-                        <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black">${stats2025.totalItems}</span></div>
+                        <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black text-gray-900">${stats2024.totalItems}</span></div>
+                        <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black text-gray-900">${stats2025.totalItems}</span></div>
                     </div>
-                    <p class="text-sm mt-3 ${stats2025.totalItems > stats2024.totalItems ? 'text-high-score font-bold' : 'text-gray-400'}">
+                    <p class="text-sm mt-3 ${stats2025.totalItems > stats2024.totalItems ? 'text-high-score font-medium' : 'text-gray-500'}">
                         ${stats2025.totalItems > stats2024.totalItems ? '↑' : ''} ${Math.abs(stats2025.totalItems - stats2024.totalItems)} itens ${stats2025.totalItems > stats2024.totalItems ? 'a mais' : 'a menos'} em 2025
                     </p>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl border-l-4 border-2024-primary animated-item">
-                    <p class="text-xl font-semibold text-gray-300 mb-4">Média Geral</p>
+                <div class="apple-card p-8 rounded-3xl border-l-4 border-2024-primary animated-item">
+                    <p class="text-xl font-semibold text-gray-700 mb-4">Média Geral</p>
                     <div class="flex justify-between items-end">
                         <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black score-${Math.round(stats2024.totalAverage)}">${stats2024.totalAverage}</span></div>
                         <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black score-${Math.round(stats2025.totalAverage)}">${stats2025.totalAverage}</span></div>
                     </div>
-                    <p class="text-sm mt-3 ${avgColor} font-bold">${avgIcon} ${Math.abs(diffAvg)} de diferença em 2025</p>
+                    <p class="text-sm mt-3 ${avgColor} font-medium">${avgIcon} ${Math.abs(diffAvg)} de diferença em 2025</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl border-l-4 border-high-score animated-item">
-                    <p class="text-xl font-semibold text-gray-300 mb-4">Notas Perfeitas</p>
+                <div class="apple-card p-8 rounded-3xl border-l-4 border-high-score animated-item">
+                    <p class="text-xl font-semibold text-gray-700 mb-4">Notas Perfeitas</p>
                     <div class="flex justify-between items-end">
                         <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black text-high-score">${stats2024.countTen}</span></div>
                         <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black text-high-score">${stats2025.countTen}</span></div>
                     </div>
-                    <p class="text-sm mt-3 text-high-score font-bold"># ${stats2025.countTen} Notas 10/10 em 2025</p>
+                    <p class="text-sm mt-3 text-high-score font-medium"># ${stats2025.countTen} Notas 10/10 em 2025</p>
                 </div>
             `;
         }
@@ -329,7 +865,7 @@
                 const avg2024 = stats2024.averages[cat.id];
                 const avg2025 = stats2025.averages[cat.id];
                 const diffAvgCat = (avg2025 - avg2024).toFixed(2);
-                let avgCatColor = 'text-gray-400';
+                let avgCatColor = 'text-gray-600';
                 let avgCatIcon = '';
                 if (diffAvgCat > 0) { avgCatColor = 'text-high-score'; avgIcon = '↑'; } 
                 else if (diffAvgCat < 0) { avgCatColor = 'text-low-score'; avgIcon = '↓'; }
@@ -337,25 +873,25 @@
                 html += `
                     <div class="mb-8 animated-item">
                         <div class="flex justify-between items-center mb-1">
-                            <h3 class="text-2xl font-bold">${cat.label}</h3>
+                            <h3 class="text-2xl font-bold text-gray-800">${cat.label}</h3>
                             <span class="text-sm font-semibold ${avgCatColor}">${avgCatIcon} ${Math.abs(diffAvgCat)} (Média)</span>
                         </div>
                         <div class="space-y-3">
                             <!-- Barra 2024 (Roxo) -->
                             <div class="flex items-center">
-                                <span class="text-sm font-semibold w-16 text-2024-primary">2024 (${avg2024})</span>
-                                <div class="flex-grow bg-gray-700/50 rounded-full h-7 relative">
+                                <span class="text-sm font-medium w-16 text-2024-primary">2024 (${avg2024})</span>
+                                <div class="flex-grow bg-gray-200 rounded-full h-7 relative">
                                     <div class="bar-fill h-full rounded-full bg-2024-primary/80 shadow-md" style="--bar-width: ${width2024}%;"></div>
                                 </div>
-                                <span class="ml-3 text-lg font-bold w-8 text-right">${count2024}</span>
+                                <span class="ml-3 text-lg font-bold w-8 text-right text-gray-700">${count2024}</span>
                             </div>
                             <!-- Barra 2025 (Azul) -->
                             <div class="flex items-center">
-                                <span class="text-sm font-semibold w-16 text-2025-primary">2025 (${avg2025})</span>
-                                <div class="flex-grow bg-gray-700/50 rounded-full h-7 relative">
+                                <span class="text-sm font-medium w-16 text-2025-primary">2025 (${avg2025})</span>
+                                <div class="flex-grow bg-gray-200 rounded-full h-7 relative">
                                     <div class="bar-fill h-full rounded-full bg-2025-primary/80 shadow-md" style="--bar-width: ${width2025}%;"></div>
                                 </div>
-                                <span class="ml-3 text-lg font-bold w-8 text-right">${count2025}</span>
+                                <span class="ml-3 text-lg font-bold w-8 text-right text-gray-700">${count2025}</span>
                             </div>
                         </div>
                     </div>
@@ -399,7 +935,7 @@
             } else {
                 // Score de 0 a 10 (Música e Jogos)
                 scoreVisual = `
-                    <div class="w-full h-2 rounded-full bg-gray-700/50">
+                    <div class="w-full h-2 rounded-full bg-gray-200">
                         <div class="h-full rounded-full transition-all duration-1000" style="width: ${barWidth}%; background-color: ${scoreValue >= 8 ? '#34C759' : scoreValue >= 6 ? '#FFCC00' : scoreValue >= 4 ? '#FF9500' : '#FF3B30'};"></div>
                     </div>
                 `;
@@ -407,45 +943,47 @@
             }
 
             const imageHtml = item.image 
-                ? `<img src="${item.image}" alt="${item.title}" class="item-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/4c51bf/ffffff?text=Sem+Imagem';" />`
-                : `<div class="item-image item-image-placeholder">${icon}</div>`;
+                ? `<img src="${item.image}" alt="${item.title}" class="item-image" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'item-image item-image-placeholder\\'>${icon}</div>';" />`
+                : `<div class="item-image item-image-placeholder" style="background: linear-gradient(135deg, #E5E7EB 0%, #F3F4F6 100%);">${icon}</div>`;
 
             return `
-                <div class="glass-card rounded-2xl overflow-hidden animated-item card-container shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="apple-card rounded-2xl overflow-hidden animated-item card-container">
                     <div class="relative">
                         ${imageHtml}
-                        <div class="card-image-overlay"></div>
                         <div class="absolute top-3 left-3 right-3 flex justify-between items-start z-10">
-                            <span class="text-xs font-bold text-white bg-${yearColor}/90 backdrop-blur px-2 py-1 rounded-full shadow-md">${year}</span>
+                            <span class="text-xs font-bold text-white bg-${yearColor} px-2 py-1 rounded-full shadow-sm">${year}</span>
                             <div class="flex gap-2">
                                 <!-- Ícones substituídos por texto simples com cores -->
-                                ${item.best ? '<span class="text-xs font-bold bg-high-score/90 backdrop-blur text-white px-2 py-1 rounded-full shadow-sm">DESTAQUE</span>' : ''}
-                                ${item.worst ? '<span class="text-xs font-bold bg-low-score/90 backdrop-blur text-white px-2 py-1 rounded-full shadow-sm">PIOR NOTA</span>' : ''}
+                                ${item.best ? '<span class="text-xs font-medium bg-high-score text-white px-2 py-1 rounded-full shadow-sm">DESTAQUE</span>' : ''}
+                                ${item.worst ? '<span class="text-xs font-medium bg-low-score text-white px-2 py-1 rounded-full shadow-sm">PIOR NOTA</span>' : ''}
                             </div>
                         </div>
                     </div>
-                    <div class="p-6 flex flex-col h-full text-gray-200">
-                        <h3 class="text-lg font-bold mb-1 line-clamp-2 min-h-[3.5rem] text-gray-200">${item.title}</h3>
-                        ${item.extra ? `<p class="text-xs text-gray-400">${item.extra}</p>` : ''}
+                    <div class="p-6 flex flex-col h-full text-gray-800">
+                        <h3 class="text-lg font-semibold mb-1 line-clamp-2 min-h-[3.5rem] text-gray-800">${item.title}</h3>
+                        ${item.extra ? `<p class="text-xs text-gray-500 mb-2">${item.extra}</p>` : ''}
                         
                         <!-- Nota normalizada /10 -->
                         <div class="mt-2 mb-3">
-                            <span class="text-xs font-semibold text-gray-400">Nota para Comparativo: </span>
-                            <span class="text-md font-extrabold ${normalizedScoreClass}">${normalizedScoreText}</span>
+                            <span class="text-xs font-medium text-gray-600">Nota para Comparativo: </span>
+                            <span class="text-md font-bold ${normalizedScoreClass}">${normalizedScoreText}</span>
                         </div>
                         
-                        <div class="mt-auto pt-4">
-                            <div class="flex items-center justify-between mb-2">
+                        <div class="mt-auto pt-4 border-t border-gray-200">
+                            <div class="flex items-center justify-between mb-2 mt-2">
                                 <!-- SCORE BRUTO / FORMATO ORIGINAL -->
-                                <span class="text-xl font-black ${scoreClass} text-gray-200">${rawScoreText}</span>
+                                <span class="text-xl font-black ${scoreClass} text-gray-800">${rawScoreText}</span>
                             </div>
                             ${scoreVisual}
                         </div>
+                        
                         <!-- Zona de upload de imagem para cada item -->
-                        <label class="image-upload-zone mt-4 p-3 block text-center text-xs font-semibold text-gray-400 hover:text-${yearColor} transition-colors">
-                            <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event, '${year}', '${category}', ${index})">
-                            ${item.image ? 'Trocar imagem' : 'Adicionar imagem'}
-                        </label>
+                        <div class="mt-4 pt-3 border-t border-gray-100">
+                            <label class="image-upload-zone p-3 block text-center text-xs font-medium text-gray-600 hover:text-2025-primary transition-colors cursor-pointer w-full">
+                                <input type="file" class="hidden image-input" accept="image/*" data-year="${year}" data-category="${category}" data-index="${index}">
+                                ${item.image ? '<span class="text-green-600 font-semibold">✓ Foto adicionada</span><br><span class="text-xs text-gray-500">Clique para trocar</span>' : '<span class="text-gray-500">📷 Adicionar foto</span>'}
+                            </label>
+                        </div>
                     </div>
                 </div>
             `;
@@ -467,11 +1005,22 @@
 
             container.innerHTML = sortedItems.map(obj => renderCard(obj.item, obj.year, cat, obj.index)).join('');
 
+            // Anexa event listeners aos inputs de imagem após renderizar
+            container.querySelectorAll('.image-input').forEach(input => {
+                input.addEventListener('change', function(event) {
+                    const year = this.dataset.year;
+                    const category = this.dataset.category;
+                    const index = parseInt(this.dataset.index);
+                    handleImageUpload(event, year, category, index);
+                });
+            });
+
             // Se a seção está vazia, adiciona uma mensagem
             if (sortedItems.length === 0) {
+                 const catLabel = cat === 'films' ? 'Filmes/Séries' : cat === 'music' ? 'Músicas' : 'Jogos';
                  container.innerHTML = `
-                    <div class="col-span-full p-8 text-center text-gray-400 bg-white/10 rounded-xl border border-white/20">
-                        <p class="text-xl font-semibold">Nenhum item adicionado para ${cat === 'films' ? 'Filmes/Séries' : cat === 'music' ? 'Músicas' : 'Jogos'} em ${year}.</p>
+                    <div class="col-span-full p-8 text-center text-gray-400 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
+                        <p class="text-lg font-medium">Nenhum ${catLabel.toLowerCase()} registrado em ${year}</p>
                     </div>
                  `;
             }
@@ -490,15 +1039,24 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    // Salva a imagem no objeto data
                     data[year][category][index].image = e.target.result;
-                    renderAllDetails(); // Usa a nova função
+                    
+                    // Salva no localStorage
+                    saveToLocalStorage();
+                    
+                    // Re-renderiza tudo para atualizar a interface
+                    renderAllDetails();
                     renderStats();
                     renderGraph();
 
                     // Animar o card atualizado (reinicializando o observador)
                     setTimeout(() => {
                         initializeIntersectionObserver();
-                    }, 50);
+                    }, 100);
+                };
+                reader.onerror = function() {
+                    alert('Erro ao carregar a imagem. Tente novamente.');
                 };
                 reader.readAsDataURL(file);
             }
@@ -521,68 +1079,123 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Carrega dados salvos primeiro
+            loadFromLocalStorage();
+            
+            loadProfile();
             renderStats();
             renderGraph();
-            renderAllDetails(); // Usa a nova função
+            renderAllDetails();
             initializeIntersectionObserver();
+            
+            // Salva automaticamente quando o nome do perfil é editado
+            const nameEl = document.getElementById('profile-name');
+            if (nameEl) {
+                nameEl.addEventListener('blur', handleNameChange);
+                nameEl.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.blur();
+                    }
+                });
+            }
         });
     </script>
 
-    <header class="pt-20 pb-16 px-4 md:px-8 lg:px-16">
+    <header class="pt-20 pb-16 px-4 md:px-8 lg:px-16 bg-white border-b border-gray-100 shadow-sm">
         <div class="max-w-7xl mx-auto">
-            <!-- Título Principal -->
-            <h1 class="text-6xl md:text-8xl font-black mb-2 tracking-tighter header-gradient fade-in">
+            <!-- Título Principal - Light Weight, Huge Size -->
+            <h1 class="text-6xl md:text-8xl mb-2 tracking-tighter apple-header-text fade-in" style="font-weight: 300;">
                 Meu Acervo
             </h1>
-            <!-- Subtítulo -->
-            <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tighter slide-up text-gray-100">
+            <!-- Subtítulo - Bold, Medium Size -->
+            <h2 class="text-3xl md:text-5xl font-semibold mb-4 tracking-tight slide-up text-gray-900">
                 O Mundinho do Consumo Cultural
             </h2>
             <!-- Descrição -->
-            <p class="text-xl md:text-2xl text-gray-300 font-light mt-4 slide-up" style="animation-delay: 0.2s;">
-                Acompanhando os jogos, músicas e filmes que fizeram parte da minha vida em 2024 e 2025.
+            <p class="text-xl md:text-2xl text-gray-600 font-normal mt-4 slide-up" style="animation-delay: 0.2s;">
+                Uma retrospectiva do consumo cultural ao longo dos anos.
             </p>
         </div>
     </header>
 
     <main>
+        <!-- NOVO: Seção de Perfil -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-12">
+            <div class="apple-card p-8 rounded-3xl flex flex-col md:flex-row items-center gap-8">
+                
+                <!-- Coluna da Foto -->
+                <div class="flex flex-col items-center">
+                    <label for="pic-upload" class="cursor-pointer group">
+                        <div class="relative">
+                            <img id="profile-pic" 
+                                 src="https://placehold.co/120x120/E5E7EB/4B5563?text=+" 
+                                 alt="Foto de Perfil"
+                                 class="mb-3 group-hover:opacity-80 transition-opacity" />
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black bg-opacity-20 rounded-full mb-3">
+                                <span class="text-white text-xs font-medium">📷</span>
+                            </div>
+                        </div>
+                        <input type="file" id="pic-upload" class="hidden" accept="image/*" onchange="handleProfilePicUpload(event)">
+                        <p class="text-sm text-gray-500 font-medium text-center hover:text-2025-primary transition-colors">Adicionar foto</p>
+                    </label>
+                </div>
+                
+                <!-- Coluna do Nome e Bio -->
+                <div class="flex-grow text-center md:text-left">
+                    <!-- Nome Editável -->
+                    <h2 id="profile-name" contenteditable="true" 
+                        class="text-3xl sm:text-4xl font-bold mb-3 text-gray-900 hover:text-2025-primary transition-colors cursor-text focus:outline-none focus:ring-2 focus:ring-2025-primary focus:ring-opacity-50 rounded px-2"
+                        data-placeholder="Seu nome"
+                    ></h2>
+                    
+                    <!-- Bio Editável -->
+                    <textarea id="profile-bio" 
+                              class="w-full text-gray-700 editable-bio"
+                              oninput="handleBioChange(event)"
+                              placeholder="Conte um pouco sobre você, seus gostos culturais, o que te inspira..."
+                    ></textarea>
+                </div>
+            </div>
+        </section>
+        
         <!-- Visão Geral -->
-        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-            <h2 class="text-3xl font-bold mb-8 text-2025-primary">Visão Geral</h2>
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-10">
+            <h2 class="text-3xl font-semibold mb-8 text-2025-primary">Visão Geral</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="stats-container"></div>
         </section>
 
         <!-- Comparativo -->
-        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-            <h2 class="text-3xl font-bold mb-8 text-2024-primary">Comparativo por Categoria</h2>
-            <div class="glass-card p-8 rounded-3xl" id="comparison-graph"></div>
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-16">
+            <h2 class="text-3xl font-semibold mb-8 text-2024-primary">Comparativo por Categoria</h2>
+            <div class="apple-card p-8 rounded-3xl" id="comparison-graph"></div>
         </section>
 
         <!-- Detalhes dos Itens ANO 2025 -->
         <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-            <h2 class="text-4xl font-black mb-10 border-b-4 pb-4 border-2025-primary text-2025-primary">RETROSPECTIVA 2025</h2>
+            <h2 class="text-4xl font-semibold mb-10 border-b-4 pb-4 border-2025-primary text-2025-primary">RETROSPECTIVA 2025</h2>
 
-            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Jogos (Ordenado por Nota)</h3>
+            <h3 class="text-3xl font-medium mb-8 border-b border-gray-300 pb-2 text-gray-700">Jogos (Ordenado por Nota)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2025-games"></div>
 
-            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Músicas (Ordenado por Nota)</h3>
+            <h3 class="text-3xl font-medium mb-8 border-b border-gray-300 pb-2 text-gray-700">Músicas (Ordenado por Nota)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2025-music"></div>
 
-            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Filmes & Séries (Ordenado por Nota)</h3>
+            <h3 class="text-3xl font-medium mb-8 border-b border-gray-300 pb-2 text-gray-700">Filmes & Séries (Ordenado por Nota)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="details-2025-films"></div>
         </section>
 
         <!-- Detalhes dos Itens ANO 2024 -->
         <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-            <h2 class="text-4xl font-black mb-10 border-b-4 pb-4 border-2024-primary text-2024-primary">RETROSPECTIVA 2024</h2>
+            <h2 class="text-4xl font-semibold mb-10 border-b-4 pb-4 border-2024-primary text-2024-primary">RETROSPECTIVA 2024</h2>
 
-            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Jogos (Ordenado por Nota)</h3>
+            <h3 class="text-3xl font-medium mb-8 border-b border-gray-300 pb-2 text-gray-700">Jogos (Ordenado por Nota)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2024-games"></div>
 
-            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Músicas (Ordenado por Nota)</h3>
+            <h3 class="text-3xl font-medium mb-8 border-b border-gray-300 pb-2 text-gray-700">Músicas (Ordenado por Nota)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2024-music"></div>
 
-            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Filmes & Séries (Ordenado por Nota)</h3>
+            <h3 class="text-3xl font-medium mb-8 border-b border-gray-300 pb-2 text-gray-700">Filmes & Séries (Ordenado por Nota)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="details-2024-films"></div>
         </section>
     </main>
