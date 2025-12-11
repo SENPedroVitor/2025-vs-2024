@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2024 vs 2025: Minha Retrospectiva</title>
+    <title>Meu Acervo Cultural: 2024 vs 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'accent': '#007AFF',
-                        'highlight': '#5E5CE6',
-                        'high-score': '#34C759',
+                        // Cores de Destaque
+                        '2025-primary': '#007AFF', // Azul (Ano Atual)
+                        '2024-primary': '#5E5CE6', // Roxo (Ano Anterior)
+                        
+                        // Cores de Score
+                        'high-score': '#34C759', 
                         'mid-high-score': '#FFCC00',
                         'mid-low-score': '#FF9500',
                         'low-score': '#FF3B30',
+                        
+                        // Cores de Fundo Escuro para legibilidade
+                        'dark-overlay': 'rgba(0, 0, 0, 0.6)', /* Aumentei a opacidade do overlay */
+                        'dark-card-bg': 'rgba(255, 255, 255, 0.1)', /* Diminui a opacidade do card */
                     }
                 }
             }
@@ -24,77 +31,121 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            /* Fundo com a imagem do Monte Fuji e fixo */
+            /* Se a imagem não aparecer, o motivo é restrição de segurança (CORS) do ambiente */
+            background-image: url('Mt_Fuji 29-11-2013.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
+            
+            /* Define a cor padrão do texto para claro para o contraste */
+            color: #E2E8F0; 
+            position: relative; 
+            min-height: 100vh;
+        }
+
+        /* Overlay escuro para garantir a legibilidade do texto claro sobre a imagem */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--tw-colors-dark-overlay); 
+            z-index: -1;
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            /* Cartões claros com alta transparência para visualização do fundo */
+            background: var(--tw-colors-dark-card-bg);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 48px rgba(0, 122, 255, 0.15);
-            border-color: rgba(0, 122, 255, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0, 122, 255, 0.3);
+            border-color: rgba(0, 122, 255, 0.5);
         }
 
         .header-gradient {
-            background: linear-gradient(135deg, #1F1F1F 30%, #007AFF 100%);
+            /* Ajustado para funcionar no modo escuro */
+            background: linear-gradient(135deg, var(--tw-colors-2024-primary) 30%, var(--tw-colors-2025-primary) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra para destacar */
         }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
+        /* Cores de Score - Mantidas, pois são vibrantes */
+        .score-10, .score-9 { color: var(--tw-colors-high-score); }
+        .score-8, .score-7 { color: var(--tw-colors-mid-high-score); }
+        .score-6, .score-5 { color: var(--tw-colors-mid-low-score); }
+        .score-4, .score-3, .score-2, .score-1, .score-0, .score-negative { color: var(--tw-colors-low-score); }
+
+        /* Animações e Placeholders */
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; opacity: 0; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .slide-up { animation: slideUp 0.8s ease-out forwards; opacity: 0; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .bar-fill { animation: barFill 1.2s ease-out forwards; opacity: 0; }
+        @keyframes barFill { to { opacity: 1; } }
+        .animated-item { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .animated-item.show { opacity: 1; transform: translateY(0); }
+        
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--tw-colors-2025-primary) 0%, var(--tw-colors-2024-primary) 100%);
+        }
+
+        .item-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.9); 
+            font-weight: 900;
+        }
+
+        .image-upload-zone {
+            border: 2px dashed #9CA3AF; /* Cor clara para a borda pontilhada */
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload-zone:hover {
+            border-color: var(--tw-colors-2025-primary);
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .card-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
             opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .slide-up {
-            animation: slideUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .bar-fill {
-            animation: barFill 1.2s ease-out forwards;
-            width: 0;
-        }
-
-        @keyframes barFill {
-            to { width: var(--bar-width); }
-        }
-
-        .score-10, .score-9 { color: #34C759; }
-        .score-8, .score-7 { color: #FFCC00; }
-        .score-6, .score-5 { color: #FF9500; }
-        .score-4, .score-3, .score-2, .score-1, .score-0, .score-negative { color: #FF3B30; }
-
-        .star-filled { color: #FFD700; }
-        .star-empty { color: #D1D5DB; }
-
-        .animated-item {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-        }
-
-        .animated-item.show {
+        .glass-card:hover .card-image-overlay {
             opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
@@ -103,59 +154,59 @@
         const data = {
             '2024': {
                 music: [
-                    { title: "Diário de um Excluído - Santtos", score: 8, extra: "(melhor faixa: 'Café')" },
-                    { title: "American Dream - 21 Savage", score: 7.5 },
-                    { title: "Vultures 1 - Kanye West", score: 7 },
-                    { title: "Puterrier (Funk)", score: 8.5 },
-                    { title: "Insano - Kid Cudi", score: 10, best: true },
-                    { title: "Royal Blu - Blu / Roy Royal", score: 8 },
-                    { title: "2093 - Yeat", score: 4 },
-                    { title: "WE DON'T TRUST YOU - Future - Metro Boomin", score: 0, extra: "Sem nota" },
-                    { title: "Kalledy - Link do zap", score: 9 },
-                    { title: "Dias antes do caos - Alee", score: 7 }
+                    { title: "Diário de um Excluído - Santtos", score: 8, extra: "(melhor faixa: 'Café')", image: "" },
+                    { title: "American Dream - 21 Savage", score: 7.5, image: "" },
+                    { title: "Vultures 1 - Kanye West", score: 7, image: "" },
+                    { title: "Puterrier (Funk)", score: 8.5, image: "" },
+                    { title: "Insano - Kid Cudi", score: 10, best: true, image: "" },
+                    { title: "Royal Blu - Blu / Roy Royal", score: 8, image: "" },
+                    { title: "2093 - Yeat", score: 4, image: "" },
+                    { title: "WE DON'T TRUST YOU - Future - Metro Boomin", score: 0, extra: "Sem nota", image: "" },
+                    { title: "Kalledy - Link do zap", score: 9, image: "" },
+                    { title: "Dias antes do caos - Alee", score: 7, image: "" }
                 ],
                 films: [
-                    { title: "The Marvels (2023)", score: 0.5, worst: true, type: "Filme" },
-                    { title: "Duna: Parte 2", score: 4, extra: "Bom", type: "Filme" },
-                    { title: "Kung Fu Panda 4", score: 3, extra: "Médio", type: "Filme" }
+                    { title: "The Marvels (2023)", score: 0.5, worst: true, type: "Filme", image: "" },
+                    { title: "Duna: Parte 2", score: 4, extra: "Bom", type: "Filme", image: "" },
+                    { title: "Kung Fu Panda 4", score: 3, extra: "Médio", type: "Filme", image: "" }
                 ],
                 games: []
             },
             '2025': {
                 music: [
-                    { title: "Timely - Anri", score: 8 },
-                    { title: "Standing Still In A Moving Scene - 百景", score: 10 },
-                    { title: "Ballonerism - Mac Miller", score: 10 },
-                    { title: "Diamantes, Lágrimas e Rostos para Esquecer - BK", score: 8 },
-                    { title: "What A Devastating Turn of Events - Rachel Chinouriri", score: 7 },
-                    { title: "Hurry Up Tomorrow - The Weeknd", score: 7 },
-                    { title: "Quanto Mais Eu Como, Mais Fome Eu Sinto - Djonga", score: 5 },
-                    { title: "MUSIC - SORRY 4 DA WAIT - Playboi Carti", score: 4 },
-                    { title: "SWAG - Justin Bieber", score: 6 },
-                    { title: "JACKBOYS 2 - travis", score: 2 },
-                    { title: "CARO Vapor II - Don L", score: 10 },
-                    { title: "Eu venci o mundo - Veigh", score: -10, worst: true }
+                    { title: "Timely - Anri", score: 8, image: "" },
+                    { title: "Standing Still In A Moving Scene - 百景", score: 10, image: "" },
+                    { title: "Ballonerism - Mac Miller", score: 10, image: "" },
+                    { title: "Diamantes, Lágrimas e Rostos para Esquecer - BK", score: 8, image: "" },
+                    { title: "What A Devastating Turn of Events - Rachel Chinouriri", score: 7, image: "" },
+                    { title: "Hurry Up Tomorrow - The Weeknd", score: 7, image: "" },
+                    { title: "Quanto Mais Eu Como, Mais Fome Eu Sinto - Djonga", score: 5, image: "" },
+                    { title: "MUSIC - SORRY 4 DA WAIT - Playboi Carti", score: 4, image: "" },
+                    { title: "SWAG - Justin Bieber", score: 6, image: "" },
+                    { title: "JACKBOYS 2 - travis", score: 2, image: "" },
+                    { title: "CARO Vapor II - Don L", score: 10, image: "" },
+                    { title: "Eu venci o mundo - Veigh", score: -10, worst: true, image: "" }
                 ],
                 films: [
-                    { title: "Divertidamente 2", score: 4, type: "Filme" },
-                    { title: "Captain America: Brave New World", score: 2, type: "Filme" },
-                    { title: "Sinners", score: 4, type: "Filme" },
-                    { title: "Superman (2025)", score: 4.5, type: "Filme" },
-                    { title: "The Summer I Turned Pretty", score: 5, type: "Série" },
-                    { title: "Peacemaker Season 2", score: 8, best: true, type: "Série" }
+                    { title: "Divertidamente 2", score: 4, type: "Filme", image: "" },
+                    { title: "Captain America: Brave New World", score: 2, type: "Filme", image: "" },
+                    { title: "Sinners", score: 4, type: "Filme", image: "" },
+                    { title: "Superman (2025)", score: 4.5, type: "Filme", image: "" },
+                    { title: "The Summer I Turned Pretty", score: 5, type: "Série", image: "" },
+                    { title: "Peacemaker Season 2", score: 8, best: true, type: "Série", image: "" }
                 ],
                 games: [
-                    { title: "Batman: Arkham City", score: 10 },
-                    { title: "Devil May Cry 5", score: 10 },
-                    { title: "Hogwarts Legacy", score: 5 },
-                    { title: "The Last of Us Part I", score: 10 },
-                    { title: "BioShock Infinite", score: 10 },
-                    { title: "Resident Evil 4 Remake", score: 10 },
-                    { title: "Lies Of P", score: 10 },
-                    { title: "Miles Morales", score: 10 },
-                    { title: "JEDI FALLEN ORDER", score: 10 },
-                    { title: "South Park: The Fractured But Whole", score: 10 },
-                    { title: "South Park: The Stick of Truth", score: 10 }
+                    { title: "Batman: Arkham City", score: 10, image: "" },
+                    { title: "Devil May Cry 5", score: 10, image: "" },
+                    { title: "Hogwarts Legacy", score: 5, image: "" },
+                    { title: "The Last of Us Part I", score: 10, image: "" },
+                    { title: "BioShock Infinite", score: 10, image: "" },
+                    { title: "Resident Evil 4 Remake", score: 10, image: "" },
+                    { title: "Lies Of P", score: 10, image: "" },
+                    { title: "Miles Morales", score: 10, image: "" },
+                    { title: "JEDI FALLEN ORDER", score: 10, image: "" },
+                    { title: "South Park: The Fractured But Whole", score: 10, image: "" },
+                    { title: "South Park: The Stick of Truth", score: 10, image: "" }
                 ]
             }
         };
@@ -163,10 +214,13 @@
         function normalizeScore(item, isFilm) {
             let score = item.score;
             if (isFilm) {
-                if (item.extra === "Bom") return 8;
-                if (item.extra === "Médio") return 6;
-                if (score <= 5 && score !== 0 && item.type === "Filme") return score * 2;
+                // Normaliza scores de filmes/séries para 10
+                if (item.title.includes("Duna: Parte 2")) return 8; 
+                if (item.title.includes("Kung Fu Panda 4")) return 6; 
+                if (item.score <= 5 && item.score > 0 && item.type === "Filme") return item.score * 2;
+                if (item.score === 0.5) return 1; 
             }
+            // Garante que o score nunca seja negativo para o cálculo da média
             return Math.max(0, score);
         }
 
@@ -182,10 +236,11 @@
                 yearData[cat].forEach(item => {
                     totalItems++;
                     const score = normalizeScore(item, isFilm);
-                    sum += score;
-                    if (score >= 0) {
+                    
+                    if (score >= 0 && item.extra !== "Sem nota") {
                         totalScore += score;
                         countScores++;
+                        sum += score;
                         count++;
                     }
                     if (score === 10) countTen++;
@@ -200,81 +255,105 @@
         const stats2024 = calculateStats(data['2024']);
         const stats2025 = calculateStats(data['2025']);
 
+        // Substituí os emojis por letras para o placeholder
+        function getIconForCategory(category) {
+            const icons = {
+                games: 'G', 
+                music: 'M', 
+                films: 'F'
+            };
+            return icons[category] || 'P';
+        }
+
         function renderStats() {
+            // Cálculo da diferença de média
+            const diffAvg = (stats2025.totalAverage - stats2024.totalAverage).toFixed(2);
+            let avgColor = 'text-gray-400';
+            let avgIcon = '';
+            if (diffAvg > 0) {
+                avgColor = 'text-high-score'; 
+                avgIcon = '↑';
+            } else if (diffAvg < 0) {
+                avgColor = 'text-low-score'; 
+                avgIcon = '↓';
+            }
+
             document.getElementById('stats-container').innerHTML = `
-                <div class="glass-card p-8 rounded-3xl border-l-4 border-blue-500 animated-item">
-                    <p class="text-xl font-semibold text-gray-700 mb-4">Total de Itens</p>
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-2025-primary animated-item">
+                    <p class="text-xl font-semibold text-gray-300 mb-4">Total de Itens</p>
                     <div class="flex justify-between items-end">
-                        <div><span class="text-3xl font-bold text-purple-600">2024:</span> <span class="text-5xl font-black">${stats2024.totalItems}</span></div>
-                        <div><span class="text-3xl font-bold text-blue-600">2025:</span> <span class="text-6xl font-black">${stats2025.totalItems}</span></div>
+                        <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black">${stats2024.totalItems}</span></div>
+                        <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black">${stats2025.totalItems}</span></div>
                     </div>
-                    <p class="text-sm mt-3 text-green-600 font-bold">↑ ${stats2025.totalItems - stats2024.totalItems} itens em 2025</p>
+                    <p class="text-sm mt-3 ${stats2025.totalItems > stats2024.totalItems ? 'text-high-score font-bold' : 'text-gray-400'}">
+                        ${stats2025.totalItems > stats2024.totalItems ? '↑' : ''} ${Math.abs(stats2025.totalItems - stats2024.totalItems)} itens ${stats2025.totalItems > stats2024.totalItems ? 'a mais' : 'a menos'} em 2025
+                    </p>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl border-l-4 border-purple-500 animated-item">
-                    <p class="text-xl font-semibold text-gray-700 mb-4">Média Geral</p>
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-2024-primary animated-item">
+                    <p class="text-xl font-semibold text-gray-300 mb-4">Média Geral</p>
                     <div class="flex justify-between items-end">
-                        <div><span class="text-3xl font-bold text-purple-600">2024:</span> <span class="text-5xl font-black score-${Math.round(stats2024.totalAverage)}">${stats2024.totalAverage}</span></div>
-                        <div><span class="text-3xl font-bold text-blue-600">2025:</span> <span class="text-6xl font-black score-${Math.round(stats2025.totalAverage)}">${stats2025.totalAverage}</span></div>
+                        <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black score-${Math.round(stats2024.totalAverage)}">${stats2024.totalAverage}</span></div>
+                        <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black score-${Math.round(stats2025.totalAverage)}">${stats2025.totalAverage}</span></div>
                     </div>
-                    <p class="text-sm mt-3 text-gray-600">Nota média /10</p>
+                    <p class="text-sm mt-3 ${avgColor} font-bold">${avgIcon} ${Math.abs(diffAvg)} de diferença em 2025</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl border-l-4 border-green-500 animated-item">
-                    <p class="text-xl font-semibold text-gray-700 mb-4">Notas Perfeitas</p>
+                <div class="glass-card p-8 rounded-3xl border-l-4 border-high-score animated-item">
+                    <p class="text-xl font-semibold text-gray-300 mb-4">Notas Perfeitas</p>
                     <div class="flex justify-between items-end">
-                        <div><span class="text-3xl font-bold text-purple-600">2024:</span> <span class="text-5xl font-black text-green-600">${stats2024.countTen}</span></div>
-                        <div><span class="text-3xl font-bold text-blue-600">2025:</span> <span class="text-6xl font-black text-green-600">${stats2025.countTen}</span></div>
+                        <div><span class="text-3xl font-bold text-2024-primary">2024:</span> <span class="text-5xl font-black text-high-score">${stats2024.countTen}</span></div>
+                        <div><span class="text-3xl font-bold text-2025-primary">2025:</span> <span class="text-6xl font-black text-high-score">${stats2025.countTen}</span></div>
                     </div>
-                    <p class="text-sm mt-3 text-green-600 font-bold">⭐ Notas 10/10</p>
-                </div>
-            `;
-
-            const gameGrowth = stats2025.counts.games - stats2024.counts.games;
-            document.getElementById('insights-container').innerHTML = `
-                <div class="glass-card p-10 rounded-3xl max-w-4xl mx-auto">
-                    <h3 class="text-3xl font-bold mb-6 text-gray-800">🏆 Conclusões</h3>
-                    <div class="space-y-4 text-left">
-                        <div class="bg-blue-50 p-4 rounded-xl">
-                            <p class="text-lg"><strong class="text-blue-600">Maior Evolução: Jogos!</strong> De 0 para ${stats2025.counts.games} títulos em 2025.</p>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-xl">
-                            <p class="text-lg"><strong class="text-purple-600">Música Consistente:</strong> Manteve qualidade alta com média de ${stats2025.averages.music}/10.</p>
-                        </div>
-                        <div class="bg-green-50 p-4 rounded-xl">
-                            <p class="text-lg"><strong class="text-green-600">Qualidade Aprovada:</strong> ${stats2025.countTen} notas perfeitas em 2025!</p>
-                        </div>
-                    </div>
+                    <p class="text-sm mt-3 text-high-score font-bold"># ${stats2025.countTen} Notas 10/10 em 2025</p>
                 </div>
             `;
         }
-
+        
         function renderGraph() {
-            const maxCount = Math.max(stats2024.totalItems, stats2025.totalItems);
+            const maxCount = Math.max(stats2024.totalItems, stats2025.totalItems, 10); 
             let html = '';
 
-            ['games', 'music', 'films'].forEach(cat => {
-                const label = { games: 'Jogos', music: 'Músicas', films: 'Filmes/Séries' }[cat];
-                const count2024 = stats2024.counts[cat];
-                const count2025 = stats2025.counts[cat];
-                const width2024 = (count2024 / maxCount) * 100;
-                const width2025 = (count2025 / maxCount) * 100;
+            const categories = [
+                { id: 'games', label: 'Jogos' }, 
+                { id: 'music', label: 'Músicas' }, 
+                { id: 'films', label: 'Filmes/Séries' } 
+            ];
+
+            categories.forEach(cat => {
+                const count2024 = stats2024.counts[cat.id];
+                const count2025 = stats2025.counts[cat.id];
+                const width2024 = count2024 > 0 ? Math.max(5, (count2024 / maxCount) * 100) : 0;
+                const width2025 = count2025 > 0 ? Math.max(5, (count2025 / maxCount) * 100) : 0;
+
+                const avg2024 = stats2024.averages[cat.id];
+                const avg2025 = stats2025.averages[cat.id];
+                const diffAvgCat = (avg2025 - avg2024).toFixed(2);
+                let avgCatColor = 'text-gray-400';
+                let avgCatIcon = '';
+                if (diffAvgCat > 0) { avgCatColor = 'text-high-score'; avgIcon = '↑'; } 
+                else if (diffAvgCat < 0) { avgCatColor = 'text-low-score'; avgIcon = '↓'; }
 
                 html += `
                     <div class="mb-8 animated-item">
-                        <h3 class="text-2xl font-bold mb-3">${label}</h3>
-                        <div class="space-y-2">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="text-2xl font-bold">${cat.label}</h3>
+                            <span class="text-sm font-semibold ${avgCatColor}">${avgCatIcon} ${Math.abs(diffAvgCat)} (Média)</span>
+                        </div>
+                        <div class="space-y-3">
+                            <!-- Barra 2024 (Roxo) -->
                             <div class="flex items-center">
-                                <span class="text-sm font-semibold w-16 text-purple-600">2024</span>
-                                <div class="flex-grow bg-gray-200 rounded-full h-6">
-                                    <div class="bar-fill h-full rounded-full bg-purple-500" style="--bar-width: ${width2024}%;"></div>
+                                <span class="text-sm font-semibold w-16 text-2024-primary">2024 (${avg2024})</span>
+                                <div class="flex-grow bg-gray-700/50 rounded-full h-7 relative">
+                                    <div class="bar-fill h-full rounded-full bg-2024-primary/80 shadow-md" style="--bar-width: ${width2024}%;"></div>
                                 </div>
                                 <span class="ml-3 text-lg font-bold w-8 text-right">${count2024}</span>
                             </div>
+                            <!-- Barra 2025 (Azul) -->
                             <div class="flex items-center">
-                                <span class="text-sm font-semibold w-16 text-blue-600">2025</span>
-                                <div class="flex-grow bg-gray-200 rounded-full h-6">
-                                    <div class="bar-fill h-full rounded-full bg-blue-500" style="--bar-width: ${width2025}%;"></div>
+                                <span class="text-sm font-semibold w-16 text-2025-primary">2025 (${avg2025})</span>
+                                <div class="flex-grow bg-gray-700/50 rounded-full h-7 relative">
+                                    <div class="bar-fill h-full rounded-full bg-2025-primary/80 shadow-md" style="--bar-width: ${width2025}%;"></div>
                                 </div>
                                 <span class="ml-3 text-lg font-bold w-8 text-right">${count2025}</span>
                             </div>
@@ -285,68 +364,149 @@
             document.getElementById('comparison-graph').innerHTML = html;
         }
 
-        function renderCard(item, year, category) {
+        function renderCard(item, year, category, index) {
             const isFilm = category === 'films';
             const scoreValue = normalizeScore(item, isFilm);
+            const rawScore = item.score; // Score original
             const scoreClass = `score-${Math.max(0, Math.round(scoreValue))}`;
             const barWidth = Math.max(5, (scoreValue / 10) * 100);
-            const yearColor = year === '2024' ? 'purple' : 'blue';
+            const yearColor = year === '2024' ? '2024-primary' : '2025-primary';
+            const icon = getIconForCategory(category);
+            
+            // Texto da nota normalizada para o cálculo (sempre /10)
+            const normalizedScoreText = scoreValue >= 0 ? `${scoreValue.toFixed(1)}/10` : 'S/N';
+            const normalizedScoreClass = `score-${Math.max(0, Math.round(scoreValue))}`;
 
+            // Define o formato de exibição do score na UI (raw score / formato original)
             let scoreVisual = '';
-            let scoreText = '';
+            let rawScoreText = '';
 
-            if (isFilm && item.type === "Filme") {
-                const fullStars = Math.floor(item.score);
-                const hasHalf = item.score % 1 !== 0;
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= fullStars) scoreVisual += '<span class="star-filled text-2xl">★</span>';
-                    else if (hasHalf && i === fullStars + 1) scoreVisual += '<span class="text-yellow-300 text-2xl">★</span>';
-                    else scoreVisual += '<span class="star-empty text-2xl">★</span>';
+            if (isFilm && (item.type === "Filme" || item.type === "Série")) {
+                const maxStars = 5; 
+                const currentStars = item.score;
+                
+                for (let i = 1; i <= maxStars; i++) {
+                    if (i <= currentStars) {
+                        scoreVisual += '<span class="star-filled text-2xl">★</span>'; 
+                    } else if (i === Math.ceil(currentStars) && currentStars % 1 !== 0) {
+                        scoreVisual += '<span class="text-yellow-300 text-2xl">★</span>'; 
+                    }
+                    else {
+                        scoreVisual += '<span class="star-empty text-2xl">★</span>'; 
+                    }
                 }
-                scoreText = `${item.score}/5`;
+                rawScoreText = `${item.score}/${maxStars} ${item.type}`;
             } else {
+                // Score de 0 a 10 (Música e Jogos)
                 scoreVisual = `
-                    <div class="w-full h-2 rounded-full bg-gray-200">
+                    <div class="w-full h-2 rounded-full bg-gray-700/50">
                         <div class="h-full rounded-full transition-all duration-1000" style="width: ${barWidth}%; background-color: ${scoreValue >= 8 ? '#34C759' : scoreValue >= 6 ? '#FFCC00' : scoreValue >= 4 ? '#FF9500' : '#FF3B30'};"></div>
                     </div>
                 `;
-                scoreText = `${item.score}/10`;
+                rawScoreText = `${rawScore}/10`;
             }
 
+            const imageHtml = item.image 
+                ? `<img src="${item.image}" alt="${item.title}" class="item-image" onerror="this.onerror=null; this.src='https://placehold.co/400x200/4c51bf/ffffff?text=Sem+Imagem';" />`
+                : `<div class="item-image item-image-placeholder">${icon}</div>`;
+
             return `
-                <div class="glass-card p-6 rounded-2xl animated-item">
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-xs font-bold text-${yearColor}-600 bg-${yearColor}-100 px-2 py-1 rounded-full">${year}</span>
-                        ${item.best ? '<span class="text-xs font-bold bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">⭐ MELHOR</span>' : ''}
-                        ${item.worst ? '<span class="text-xs font-bold bg-red-100 text-red-700 px-2 py-1 rounded-full">❌ PIOR</span>' : ''}
-                    </div>
-                    <h3 class="text-lg font-bold mb-1 line-clamp-2">${item.title}</h3>
-                    ${item.extra ? `<p class="text-xs text-gray-500 mb-3">${item.extra}</p>` : '<div class="mb-3"></div>'}
-                    <div class="mt-auto">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-2xl font-black ${scoreClass}">${scoreText}</span>
+                <div class="glass-card rounded-2xl overflow-hidden animated-item card-container shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="relative">
+                        ${imageHtml}
+                        <div class="card-image-overlay"></div>
+                        <div class="absolute top-3 left-3 right-3 flex justify-between items-start z-10">
+                            <span class="text-xs font-bold text-white bg-${yearColor}/90 backdrop-blur px-2 py-1 rounded-full shadow-md">${year}</span>
+                            <div class="flex gap-2">
+                                <!-- Ícones substituídos por texto simples com cores -->
+                                ${item.best ? '<span class="text-xs font-bold bg-high-score/90 backdrop-blur text-white px-2 py-1 rounded-full shadow-sm">DESTAQUE</span>' : ''}
+                                ${item.worst ? '<span class="text-xs font-bold bg-low-score/90 backdrop-blur text-white px-2 py-1 rounded-full shadow-sm">PIOR NOTA</span>' : ''}
+                            </div>
                         </div>
-                        ${scoreVisual}
+                    </div>
+                    <div class="p-6 flex flex-col h-full text-gray-200">
+                        <h3 class="text-lg font-bold mb-1 line-clamp-2 min-h-[3.5rem] text-gray-200">${item.title}</h3>
+                        ${item.extra ? `<p class="text-xs text-gray-400">${item.extra}</p>` : ''}
+                        
+                        <!-- Nota normalizada /10 -->
+                        <div class="mt-2 mb-3">
+                            <span class="text-xs font-semibold text-gray-400">Nota para Comparativo: </span>
+                            <span class="text-md font-extrabold ${normalizedScoreClass}">${normalizedScoreText}</span>
+                        </div>
+                        
+                        <div class="mt-auto pt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <!-- SCORE BRUTO / FORMATO ORIGINAL -->
+                                <span class="text-xl font-black ${scoreClass} text-gray-200">${rawScoreText}</span>
+                            </div>
+                            ${scoreVisual}
+                        </div>
+                        <!-- Zona de upload de imagem para cada item -->
+                        <label class="image-upload-zone mt-4 p-3 block text-center text-xs font-semibold text-gray-400 hover:text-${yearColor} transition-colors">
+                            <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(event, '${year}', '${category}', ${index})">
+                            ${item.image ? 'Trocar imagem' : 'Adicionar imagem'}
+                        </label>
                     </div>
                 </div>
             `;
         }
 
-        function renderDetails() {
-            ['games', 'music', 'films'].forEach(cat => {
-                const container = document.getElementById(`details-${cat}`);
-                if (!container) return;
-                let html = '';
-                data['2024'][cat].forEach(item => html += renderCard(item, '2024', cat));
-                data['2025'][cat].forEach(item => html += renderCard(item, '2025', cat));
-                container.innerHTML = html;
-            });
+        // Função para renderizar detalhes de uma categoria específica (por ano)
+        function renderCategoryDetails(year, cat) {
+            const container = document.getElementById(`details-${year}-${cat}`);
+            if (!container) return;
+
+            // Filtra e ordena os itens apenas para o ano e categoria especificados
+            const sortedItems = data[year][cat]
+                .map((item, i) => ({ item, year: year, index: i }))
+                .sort((a, b) => {
+                    const scoreA = normalizeScore(a.item, cat === 'films');
+                    const scoreB = normalizeScore(b.item, cat === 'films');
+                    return scoreB - scoreA;
+                });
+
+            container.innerHTML = sortedItems.map(obj => renderCard(obj.item, obj.year, cat, obj.index)).join('');
+
+            // Se a seção está vazia, adiciona uma mensagem
+            if (sortedItems.length === 0) {
+                 container.innerHTML = `
+                    <div class="col-span-full p-8 text-center text-gray-400 bg-white/10 rounded-xl border border-white/20">
+                        <p class="text-xl font-semibold">Nenhum item adicionado para ${cat === 'films' ? 'Filmes/Séries' : cat === 'music' ? 'Músicas' : 'Jogos'} em ${year}.</p>
+                    </div>
+                 `;
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderStats();
-            renderGraph();
-            renderDetails();
+        // Nova função para renderizar todos os detalhes (substitui renderDetails)
+        function renderAllDetails() {
+            ['games', 'music', 'films'].forEach(cat => {
+                renderCategoryDetails('2025', cat);
+                renderCategoryDetails('2024', cat);
+            });
+        }
+        
+        function handleImageUpload(event, year, category, index) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    data[year][category][index].image = e.target.result;
+                    renderAllDetails(); // Usa a nova função
+                    renderStats();
+                    renderGraph();
+
+                    // Animar o card atualizado (reinicializando o observador)
+                    setTimeout(() => {
+                        initializeIntersectionObserver();
+                    }, 50);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function initializeIntersectionObserver() {
+             // Remove 'show' class to reset animations
+            document.querySelectorAll('.animated-item').forEach(item => item.classList.remove('show'));
 
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
@@ -358,48 +518,73 @@
             }, { threshold: 0.1 });
 
             document.querySelectorAll('.animated-item').forEach(item => observer.observe(item));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStats();
+            renderGraph();
+            renderAllDetails(); // Usa a nova função
+            initializeIntersectionObserver();
         });
     </script>
 
     <header class="pt-20 pb-16 px-4 md:px-8 lg:px-16">
         <div class="max-w-7xl mx-auto">
+            <!-- Título Principal -->
             <h1 class="text-6xl md:text-8xl font-black mb-2 tracking-tighter header-gradient fade-in">
-                2024 vs 2025
+                Meu Acervo
             </h1>
-            <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tighter slide-up">
-                Minha Retrospectiva
+            <!-- Subtítulo -->
+            <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tighter slide-up text-gray-100">
+                O Mundinho do Consumo Cultural
             </h2>
-            <p class="text-xl md:text-2xl text-gray-700 font-light mt-4 slide-up" style="animation-delay: 0.2s;">
-                A jornada de um ano focado em música para um ano de jogos.
+            <!-- Descrição -->
+            <p class="text-xl md:text-2xl text-gray-300 font-light mt-4 slide-up" style="animation-delay: 0.2s;">
+                Acompanhando os jogos, músicas e filmes que fizeram parte da minha vida em 2024 e 2025.
             </p>
         </div>
     </header>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-        <h2 class="text-3xl font-bold mb-8 text-blue-600">📊 Visão Geral</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="stats-container"></div>
-    </section>
+    <main>
+        <!-- Visão Geral -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
+            <h2 class="text-3xl font-bold mb-8 text-2025-primary">Visão Geral</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="stats-container"></div>
+        </section>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-        <h2 class="text-3xl font-bold mb-8 text-purple-600">📈 Comparativo</h2>
-        <div class="glass-card p-8 rounded-3xl" id="comparison-graph"></div>
-    </section>
+        <!-- Comparativo -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
+            <h2 class="text-3xl font-bold mb-8 text-2024-primary">Comparativo por Categoria</h2>
+            <div class="glass-card p-8 rounded-3xl" id="comparison-graph"></div>
+        </section>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-        <h2 class="text-4xl font-bold mb-8">🎮 Jogos</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="details-games"></div>
-    </section>
+        <!-- Detalhes dos Itens ANO 2025 -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
+            <h2 class="text-4xl font-black mb-10 border-b-4 pb-4 border-2025-primary text-2025-primary">RETROSPECTIVA 2025</h2>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-        <h2 class="text-4xl font-bold mb-8">🎵 Músicas</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="details-music"></div>
-    </section>
+            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Jogos (Ordenado por Nota)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2025-games"></div>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
-        <h2 class="text-4xl font-bold mb-8">🎬 Filmes & Séries</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="details-films"></div>
-    </section>
+            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Músicas (Ordenado por Nota)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2025-music"></div>
 
-    <footer class="py-16 px-4" id="insights-container"></footer>
+            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Filmes & Séries (Ordenado por Nota)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="details-2025-films"></div>
+        </section>
+
+        <!-- Detalhes dos Itens ANO 2024 -->
+        <section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 mb-20">
+            <h2 class="text-4xl font-black mb-10 border-b-4 pb-4 border-2024-primary text-2024-primary">RETROSPECTIVA 2024</h2>
+
+            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Jogos (Ordenado por Nota)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2024-games"></div>
+
+            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Músicas (Ordenado por Nota)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" id="details-2024-music"></div>
+
+            <h3 class="text-3xl font-bold mb-8 border-b border-gray-700/50 pb-2 text-gray-300">Filmes & Séries (Ordenado por Nota)</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="details-2024-films"></div>
+        </section>
+    </main>
 </body>
 </html>
